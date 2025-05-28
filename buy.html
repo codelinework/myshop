@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Buy Now - ShopEasy</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f2f2f2;
+    }
+    .container {
+      max-width: 900px;
+      margin: 30px auto;
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    h2, h3 {
+      color: #333;
+    }
+    .cart-item {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 15px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #ccc;
+    }
+    .item-info {
+      flex: 1;
+    }
+    .item-name {
+      font-weight: bold;
+      font-size: 16px;
+    }
+    .item-qty {
+      color: #555;
+    }
+    .item-price {
+      font-size: 16px;
+      font-weight: bold;
+      color: #b12704;
+    }
+    .total {
+      text-align: right;
+      font-size: 20px;
+      font-weight: bold;
+      margin-top: 20px;
+    }
+    .form-section {
+      margin-top: 30px;
+    }
+    .form-group {
+      margin-bottom: 15px;
+    }
+    label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 5px;
+    }
+    input[type="text"], input[type="tel"], input[type="number"] {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+    .btn {
+      padding: 12px 20px;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      font-size: 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+    .btn:hover {
+      background-color: #218838;
+    }
+    .payment-options {
+      margin-top: 20px;
+      display: none;
+    }
+    .payment-options label {
+      font-weight: normal;
+      margin-right: 10px;
+      cursor: pointer;
+    }
+    #upi-section, #card-section {
+      margin-top: 15px;
+      display: none;
+    }
+    #upi-section img {
+      max-width: 200px;
+      border: 2px solid #28a745;
+      border-radius: 10px;
+    }
+    .success-msg {
+      color: green;
+      font-weight: bold;
+      margin-top: 20px;
+      font-size: 18px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>🛍️ Confirm Your Order</h2>
+
+    <!-- Cart Summary -->
+    <div id="cart-summary"></div>
+    <div class="total" id="total-amount"></div>
+
+    <!-- Customer Form -->
+    <div class="form-section">
+      <h3>Enter Your Details</h3>
+      <div class="form-group">
+        <label>Full Name</label>
+        <input type="text" id="name" placeholder="Enter your name" />
+      </div>
+      <div class="form-group">
+        <label>Mobile Number</label>
+        <input type="tel" id="mobile" placeholder="Enter your mobile number" />
+      </div>
+      <div class="form-group">
+        <label>Address</label>
+        <input type="text" id="address" placeholder="Enter delivery address" />
+      </div>
+      <button class="btn" onclick="showPaymentOptions()">Place Order</button>
+    </div>
+
+    <!-- Payment Options -->
+    <div class="payment-options" id="payment-section">
+      <h3>Select Payment Method</h3>
+      <div class="form-group">
+        <input type="radio" name="payment" value="UPI" id="upi" checked onchange="togglePaymentDetails()" />
+        <label for="upi">UPI / QR Code</label>
+
+        <input type="radio" name="payment" value="Credit Card" id="card" onchange="togglePaymentDetails()" />
+        <label for="card">Credit / Debit Card</label>
+
+        <input type="radio" name="payment" value="Cash" id="cod" onchange="togglePaymentDetails()" />
+        <label for="cod">Cash on Delivery</label>
+      </div>
+
+      <!-- UPI Section -->
+      <div id="upi-section">
+        <p>Scan this QR code with your UPI app to pay:</p>
+        <img src="images/qr.jpg" alt="UPI QR Code" />
+      </div>
+
+      <!-- Card Section -->
+      <div id="card-section">
+        <div class="form-group">
+          <label>Card Number</label>
+          <input type="text" id="card-number" placeholder="xxxx xxxx xxxx xxxx" maxlength="19" />
+        </div>
+        <div class="form-group">
+          <label>Expiry Date (MM/YY)</label>
+          <input type="text" id="card-expiry" placeholder="MM/YY" maxlength="5" />
+        </div>
+        <div class="form-group">
+          <label>CVV</label>
+          <input type="text" id="card-cvv" placeholder="xxx" maxlength="3" />
+        </div>
+      </div>
+
+      <button class="btn" onclick="confirmPayment()">Confirm Payment</button>
+    </div>
+
+    <div id="success-message" class="success-msg"></div>
+  </div>
+
+  <script>
+    // Read cart from localStorage
+    const cart = JSON.parse(localStorage.getItem('buyCart')) || [];
+    const cartSummary = document.getElementById('cart-summary');
+    const totalAmount = document.getElementById('total-amount');
+
+    function renderCartSummary() {
+      let total = 0;
+
+      if (cart.length === 0) {
+        cartSummary.innerHTML = "<p>Your cart is empty.</p>";
+        totalAmount.textContent = "";
+        return;
+      }
+
+      cartSummary.innerHTML = ''; // Clear before adding
+
+      cart.forEach(item => {
+        const itemTotal = item.price * item.quantity;
+        total += itemTotal;
+
+        const itemDiv = document.createElement('div');
+        itemDiv.classList.add('cart-item');
+
+        itemDiv.innerHTML = `
+          <div class="item-info">
+            <div class="item-name">${item.name}</div>
+            <div class="item-qty">Quantity: ${item.quantity}</div>
+          </div>
+          <div class="item-price">₹ ${itemTotal.toLocaleString('en-IN')}</div>
+        `;
+
+        cartSummary.appendChild(itemDiv);
+      });
+
+      totalAmount.textContent = `Total: ₹ ${total.toLocaleString('en-IN')}`;
+    }
+
+    function showPaymentOptions() {
+      const name = document.getElementById('name').value.trim();
+      const mobile = document.getElementById('mobile').value.trim();
+      const address = document.getElementById('address').value.trim();
+
+      if (!name || !mobile || !address) {
+        alert("Please fill all customer details.");
+        return;
+      }
+
+      // Show payment options section
+      document.getElementById('payment-section').style.display = 'block';
+      togglePaymentDetails();
+
+      // Scroll to payment options for better UX
+      document.getElementById('payment-section').scrollIntoView({behavior: "smooth"});
+    }
+
+    function togglePaymentDetails() {
+      const paymentMethod = document.querySelector('input[name="payment"]:checked').value;
+      const upiSection = document.getElementById('upi-section');
+      const cardSection = document.getElementById('card-section');
+
+      if(paymentMethod === 'UPI') {
+        upiSection.style.display = 'block';
+        cardSection.style.display = 'none';
+      } else if(paymentMethod === 'Credit Card') {
+        upiSection.style.display = 'none';
+        cardSection.style.display = 'block';
+      } else {
+        // Cash on Delivery
+        upiSection.style.display = 'none';
+        cardSection.style.display = 'none';
+      }
+    }
+
+    function confirmPayment() {
+      const paymentMethod = document.querySelector('input[name="payment"]:checked').value;
+
+      // If Card selected, validate card inputs
+      if(paymentMethod === 'Credit Card') {
+        const cardNum = document.getElementById('card-number').value.trim();
+        const cardExp = document.getElementById('card-expiry').value.trim();
+        const cardCVV = document.getElementById('card-cvv').value.trim();
+
+        if(!cardNum || !cardExp || !cardCVV) {
+          alert("Please fill all card details.");
+          return;
+        }
+
+        // Remove spaces from card number and validate length 16 digits
+        if(cardNum.replace(/\s+/g, '').length !== 16 || !/^\d{16}$/.test(cardNum.replace(/\s+/g, ''))) {
+          alert("Invalid card number.");
+          return;
+        }
+        if(!/^\d{2}\/\d{2}$/.test(cardExp)) {
+          alert("Expiry date format should be MM/YY.");
+          return;
+        }
+        if(!/^\d{3}$/.test(cardCVV)) {
+          alert("CVV must be 3 digits.");
+          return;
+        }
+      }
+
+      // Collect customer info
+      const name = document.getElementById('name').value.trim();
+      const mobile = document.getElementById('mobile').value.trim();
+      const address = document.getElementById('address').value.trim();
+
+      // Save order details locally
+      const order = {
+        customer: { name, mobile, address },
+        cart: cart,
+        paymentMethod: paymentMethod,
+        date: new Date().toISOString()
+      };
+
+      // Save order to localStorage (for demo)
+      let orders = JSON.parse(localStorage.getItem('orders')) || [];
+      orders.push(order);
+      localStorage.setItem('orders', JSON.stringify(orders));
+
+      // Clear cart and form
+      localStorage.removeItem('cart');
+      localStorage.removeItem('buyCart');
+      cartSummary.innerHTML = '';
+      totalAmount.textContent = '';
+      document.getElementById('payment-section').style.display = 'none';
+      document.querySelector('.form-section').style.display = 'none';
+
+      // Show success message
+      const successMsgEl = document.getElementById('success-message');
+      successMsgEl.innerHTML = `🎉 Order placed successfully using <b>${paymentMethod}</b>!`;
+
+      // Redirect to product.html after 3 seconds
+      setTimeout(() => {
+        window.location.href = 'product.html';
+      }, 3000);
+
+      console.log("Order saved:", order);
+    }
+
+    // Render cart summary on page load
+    renderCartSummary();
+  </script>
+</body>
+</html>

@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>ShopEasy - Products</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f8f9fa;
+    }
+    a {
+      color: white;
+      text-decoration: none;
+      margin: 0 10px;
+      position: relative;
+      transition: color 0.3s ease;
+    }
+    a:hover {
+      color: #28a745;
+    }
+    a::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      background: #28a745;
+      left: 0;
+      bottom: -4px;
+      transition: width 0.3s ease;
+    }
+    a:hover::after {
+      width: 100%;
+    }
+    .products-grid {
+      max-width: 1200px;
+      margin: 30px auto;
+      padding: 0 20px;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 20px;
+    }
+    .product-card {
+      background: white;
+      border-radius: 8px;
+      padding: 15px;
+      box-shadow: 0 2px 8px rgb(0 0 0 / 0.1);
+      display: flex;
+      flex-direction: column;
+      transition: box-shadow 0.3s ease;
+    }
+    .product-card:hover {
+      box-shadow: 0 5px 15px rgb(0 0 0 / 0.2);
+    }
+    .product-card img {
+      width: 100%;
+      height: 180px;
+      object-fit: contain;
+      margin-bottom: 12px;
+      border-radius: 5px;
+    }
+    .product-card h2 {
+      font-size: 16px;
+      font-weight: 600;
+      color: #0f1111;
+      margin: 0 0 10px;
+      min-height: 48px;
+    }
+    .product-card p.price {
+      color: #b12704;
+      font-size: 18px;
+      font-weight: 700;
+      margin: 0 0 10px;
+    }
+    .product-card div.rating {
+      color: #ffa41c;
+      margin-bottom: 10px;
+      font-weight: 600;
+    }
+    .product-card button {
+      margin-top: auto;
+      background-color: #febd69;
+      border: none;
+      padding: 10px;
+      border-radius: 5px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    .product-card button:hover {
+      background-color: #f3a847;
+    }
+    .filters {
+      max-width: 1200px;
+      margin: 20px auto;
+      padding: 0 20px;
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    .filters label {
+      font-weight: 600;
+      font-size: 14px;
+    }
+    .filters select {
+      padding: 6px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      margin-left: 6px;
+      cursor: pointer;
+    }
+    #clear-filters {
+      padding: 6px 12px;
+      background: #dc3545;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: background-color 0.3s;
+    }
+    #clear-filters:hover {
+      background: #bb2d3b;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <div style="background-color:#333; padding:15px 20px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap;">
+    <div style="color:white; font-size:24px; font-weight:bold;">🛒 ShopEasy</div>
+    <div style="display:flex; align-items:center; gap:15px; flex-wrap:wrap;">
+      <form id="search-form" style="display:flex; align-items:center;">
+        <input type="text" id="search-input" placeholder="Search products..." style="padding:6px 10px; border:none; border-radius:5px 0 0 5px; outline:none;" required>
+        <button type="submit" style="padding:6px 15px; border:none; background:#28a745; color:white; border-radius:0 5px 5px 0; cursor:pointer;">Search</button>
+      </form>
+      <a href="index.html">Home</a>
+      <a href="login.html">Login</a>
+      <a href="register.html">Register</a>
+      <a href="product.html">Products</a>
+      <a href="contact.html">Contact</a>
+      <a href="cart.html">Cart (<span id="cart-count">0</span>)</a>
+    </div>
+  </div>
+
+  <!-- Filters -->
+  <div class="filters">
+    <label>Price:
+      <select id="price-filter">
+        <option value="all">All</option>
+        <option value="0-50000">Below ₹50,000</option>
+        <option value="50000-100000">₹50,000 - ₹1,00,000</option>
+        <option value="100000-200000">₹1,00,000 - ₹2,00,000</option>
+        <option value="200000+">Above ₹2,00,000</option>
+      </select>
+    </label>
+
+    <label>Rating:
+      <select id="rating-filter">
+        <option value="all">All</option>
+        <option value="4">4 stars & up</option>
+        <option value="4.5">4.5 stars & up</option>
+        <option value="5">5 stars</option>
+      </select>
+    </label>
+
+    <button id="clear-filters">Clear Filters</button>
+  </div>
+
+ <!-- Products Section -->
+<main>
+  <div class="products-grid">
+
+    <!-- Product Card 1 -->
+    <div class="product-card" data-price-num="99999" data-rating-num="4">
+      <img src="images/Wireless Headphones.jpg" alt="Wireless Headphones" />
+      <h2>Wireless Bluetooth Headphones</h2>
+      <p class="price">₹ 99,999.00</p>
+      <div class="rating">★★★★☆ (150)</div>
+      <button class="add-to-cart" data-name="Wireless Bluetooth Headphones" data-price="₹ 99,999.00">Add to Cart</button>
+    </div>
+
+    <!-- Product Card 2 -->
+    <div class="product-card" data-price-num="79999" data-rating-num="4">
+      <img src="images/Watch.jpg" alt="Smart Watch" />
+      <h2>Smart Fitness Watch</h2>
+      <p class="price">₹ 79,999.00</p>
+      <div class="rating">★★★★☆ (340)</div>
+      <button class="add-to-cart" data-name="Smart Fitness Watch" data-price="₹ 79,999.00">Add to Cart</button>
+    </div>
+
+    <!-- Product Card 3 -->
+    <div class="product-card" data-price-num="35550" data-rating-num="5">
+      <img src="images/Bluetooth Speaker.jpg" alt="Bluetooth Speaker" />
+      <h2>Portable Bluetooth Speaker</h2>
+      <p class="price">₹ 35,550.00</p>
+      <div class="rating">★★★★★ (500)</div>
+      <button class="add-to-cart" data-name="Portable Bluetooth Speaker" data-price="₹ 35,550.00">Add to Cart</button>
+    </div>
+
+    <!-- Product Card 4 -->
+    <div class="product-card" data-price-num="75550" data-rating-num="5">
+      <img src="images/iphone16.jpg" alt="Iphone 16" />
+      <h2>Iphone 16</h2>
+      <p class="price">₹ 75,550.00</p>
+      <div class="rating">★★★★★ (469)</div>
+      <button class="add-to-cart" data-name="Iphone 16" data-price="₹ 75,550.00">Add to Cart</button>
+    </div>
+
+    <!-- Product Card 5 -->
+    <div class="product-card" data-price-num="70550" data-rating-num="5">
+      <img src="images/samsung s25+.jpg" alt="samsung s25+" />
+      <h2>samsung s25+</h2>
+      <p class="price">₹ 70,550.00</p>
+      <div class="rating">★★★★★ (698)</div>
+      <button class="add-to-cart" data-name="samsung s25+" data-price="₹ 70,550.00">Add to Cart</button>
+    </div>
+
+    <!-- Product Card 6 -->
+    <div class="product-card" data-price-num="159999" data-rating-num="5">
+      <img src="images/google pixel 9PRO.jpg" alt="google pixel 9PRO" />
+      <h2>google pixel 9PRO</h2>
+      <p class="price">₹ 1,59,999.00</p>
+      <div class="rating">★★★★★ (478)</div>
+      <button class="add-to-cart" data-name="google pixel 9PRO" data-price="₹ 1,59,999.00">Add to Cart</button>
+    </div>
+
+    <!-- Product Card 7 -->
+    <div class="product-card" data-price-num="59999" data-rating-num="5">
+      <img src="images/Asus tuf f15.jpg" alt="Asus tuf f15" />
+      <h2>Asus tuf f15</h2>
+      <p class="price">₹ 59,999.00</p>
+      <div class="rating">★★★★★ (258)</div>
+      <button class="add-to-cart" data-name="Asus tuf f15" data-price="₹ 59,999.00">Add to Cart</button>
+    </div>
+
+    <!-- Product Card 8 -->
+    <div class="product-card" data-price-num="182999" data-rating-num="5">
+      <img src="images/macbook pro m4.jpg" alt="macbook pro m4" />
+      <h2>macbook pro m4</h2>
+      <p class="price">₹ 1,82,999.00</p>
+      <div class="rating">★★★★★ (369)</div>
+      <button class="add-to-cart" data-name="macbook pro m4" data-price="₹ 1,82,999.00">Add to Cart</button>
+    </div>
+
+    <!-- Product Card 9 -->
+    <div class="product-card" data-price-num="759999" data-rating-num="5">
+      <img src="images/nike air jordan.jpg" alt="nike air jordan" />
+      <h2>nike air jordan</h2>
+      <p class="price">₹ 7,59,999.00</p>
+      <div class="rating">★★★★★ (985)</div>
+      <button class="add-to-cart" data-name="nike air jordan" data-price="₹ 7,59,999.00">Add to Cart</button>
+    </div>
+
+    <!-- Product Card 10 -->
+    <div class="product-card" data-price-num="19999" data-rating-num="5">
+      <img src="images/gaming chair.jpg" alt="gaming chair" />
+      <h2>gaming chair</h2>
+      <p class="price">₹ 19,999.00</p>
+      <div class="rating">★★★★★ (951)</div>
+      <button class="add-to-cart" data-name="gaming chair" data-price="₹ 19,999.00">Add to Cart</button>
+    </div>
+
+    <!-- Product Card 11 -->
+    <div class="product-card" data-price-num="199999" data-rating-num="5">
+      <img src="images/gaming table.jpg" alt="gaming table" />
+      <h2>gaming table</h2>
+      <p class="price">₹ 1,99,999.00</p>
+      <div class="rating">★★★★★ (125)</div>
+      <button class="add-to-cart" data-name="gaming table" data-price="₹ 1,99,999.00">Add to Cart</button>
+    </div>
+
+    <!-- Product Card 12 -->
+    <div class="product-card" data-price-num="59990" data-rating-num="5">
+      <img src="images/ps5.jpg" alt="ps5" />
+      <h2>ps5</h2>
+      <p class="price">₹ 59,990.00</p>
+      <div class="rating">★★★★★ (478)</div>
+      <button class="add-to-cart" data-name="ps5" data-price="₹ 59,990.00">Add to Cart</button>
+    </div>
+
+    <!-- Product Card 13 -->
+    <div class="product-card" data-price-num="89999" data-rating-num="5">
+      <img src="images/asus tuf a15.jpg" alt="asus tuf a15" />
+      <h2>asus tuf a15</h2>
+      <p class="price">₹ 89,999.00</p>
+      <div class="rating">★★★★★ (963)</div>
+      <button class="add-to-cart" data-name="asus tuf a15" data-price="₹ 89,999.00">Add to Cart</button>
+    </div>
+
+    <!-- Product Card 14 -->
+    <div class="product-card" data-price-num="9999" data-rating-num="5">
+      <img src="images/alexa dot 5th generation.jpg" alt="alexa dot 5th generation" />
+      <h2>alexa dot 5th generation</h2>
+      <p class="price">₹ 9,999.00</p>
+      <div class="rating">★★★★★ (753)</div>
+      <button class="add-to-cart" data-name="alexa dot 5th generation" data-price="₹ 9,999.00">Add to Cart</button>
+    </div>
+
+    <!-- Product Card 15 -->
+    <div class="product-card" data-price-num="119592" data-rating-num="5">
+      <img src="images/apple imac.jpg" alt="apple imac" />
+      <h2>apple imac</h2>
+      <p class="price">₹ 1,19,592.00</p>
+      <div class="rating">★★★★★ (889)</div>
+      <button class="add-to-cart" data-name="apple imac" data-price="₹ 1,19,592.00">Add to Cart</button>
+    </div>
+
+  </div>
+</main>
+    <!-- Add more product cards similarly ... -->
+
+  </div>
+</main>
+
+<script>
+  const priceFilter = document.getElementById('price-filter');
+  const ratingFilter = document.getElementById('rating-filter');
+  const clearFiltersBtn = document.getElementById('clear-filters');
+  const productCards = document.querySelectorAll('.product-card');
+  const cartCountSpan = document.getElementById('cart-count');
+
+  // FILTER FUNCTION
+  function filterProducts() {
+    const priceVal = priceFilter.value;
+    const ratingVal = parseFloat(ratingFilter.value);
+
+    productCards.forEach(card => {
+      const price = parseInt(card.getAttribute('data-price-num'));
+      const rating = parseFloat(card.getAttribute('data-rating-num'));
+      let show = true;
+
+      if (priceVal !== 'all') {
+        if (priceVal === '0-50000' && price > 50000) show = false;
+        else if (priceVal === '50000-100000' && (price < 50000 || price > 100000)) show = false;
+        else if (priceVal === '100000-200000' && (price < 100000 || price > 200000)) show = false;
+        else if (priceVal === '200000+' && price <= 200000) show = false;
+      }
+
+      if (ratingVal !== 'all' && rating < ratingVal) {
+        show = false;
+      }
+
+      card.style.display = show ? '' : 'none';
+    });
+  }
+
+  priceFilter.addEventListener('change', filterProducts);
+  ratingFilter.addEventListener('change', filterProducts);
+
+  clearFiltersBtn.addEventListener('click', () => {
+    priceFilter.value = 'all';
+    ratingFilter.value = 'all';
+    filterProducts();
+  });
+
+  // CART FUNCTIONS
+  function updateCartCount() {
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    const totalCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+    cartCountSpan.textContent = totalCount;
+  }
+
+  // Add to Cart button handler
+  document.querySelectorAll('.add-to-cart').forEach(button => {
+    button.addEventListener('click', () => {
+      const name = button.getAttribute('data-name');
+      const priceString = button.getAttribute('data-price'); // "₹ 99,999.00"
+const price = Number(priceString.replace(/[₹,\s]/g, '')); // removes ₹, commas, spaces
+
+
+      let cart = JSON.parse(localStorage.getItem('cart')) || [];
+      const existingProductIndex = cart.findIndex(item => item.name === name);
+
+      if (existingProductIndex >= 0) {
+        // Increase quantity if product already in cart
+        cart[existingProductIndex].quantity += 1;
+      } else {
+        // Add new product with quantity 1
+        cart.push({ name, price, quantity: 1 });
+      }
+
+      localStorage.setItem('cart', JSON.stringify(cart));
+      updateCartCount();
+      alert(`${name} added to cart!`);
+    });
+  });
+
+  // Update cart count on page load
+  updateCartCount();
+
+  // SEARCH FUNCTION
+  document.getElementById('search-form').addEventListener('submit', e => {
+    e.preventDefault();
+    const query = document.getElementById('search-input').value.toLowerCase();
+
+    productCards.forEach(card => {
+      const title = card.querySelector('h2').textContent.toLowerCase();
+      card.style.display = title.includes(query) ? '' : 'none';
+    });
+  });
+</script>
+
+</body>
+</html>

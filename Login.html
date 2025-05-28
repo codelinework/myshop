@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Login & Register</title>
+  <style>
+    /* Reset and base */
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Amazon Ember', Arial, sans-serif;
+      background-color: #f3f3f3;
+      margin: 0;
+      color: #111;
+    }
+
+
+    /* Center content container */
+    .container {
+      max-width: 400px;
+      margin: 40px auto 60px;
+      padding: 0 20px;
+    }
+
+    /* Form box */
+    .form-box {
+      background: white;
+      padding: 40px 30px;
+      border-radius: 6px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      width: 100%;
+      text-align: center;
+      font-size: 14px;
+      box-sizing: border-box;
+    }
+
+    h2 {
+      font-weight: 700;
+      margin-bottom: 25px;
+      font-size: 24px;
+      color: #131921;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px 15px;
+      margin-bottom: 20px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 15px;
+      transition: border-color 0.3s ease;
+    }
+    input:focus {
+      border-color: #f90;
+      outline: none;
+      box-shadow: 0 0 5px rgba(249, 147, 0, 0.6);
+    }
+
+    button {
+      width: 100%;
+      padding: 12px 0;
+      background-color: #f90;
+      border: none;
+      border-radius: 4px;
+      font-weight: 700;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      box-shadow: 0 2px 0 #c67600;
+    }
+    button:hover {
+      background-color: #e67c00;
+    }
+
+    p {
+      margin-top: 15px;
+      font-size: 13px;
+      color: #555;
+    }
+
+    p a {
+      color: #007185;
+      text-decoration: none;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    p a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <div style="background-color:#333; padding:15px 20px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; position:sticky; top:0; z-index:1000; box-shadow:0 2px 4px rgba(0,0,0,0.2);">
+  <div style="color:white; font-size:24px; font-weight:bold; user-select:none;">🛒 ShopEasy</div>
+  <div style="display:flex; align-items:center; gap:15px; flex-wrap:wrap;">
+
+    <a href="index.html" style="color:white; text-decoration:none; margin:0 10px; font-weight:600; white-space:nowrap;">Home</a>
+    <a href="login.html" style="color:white; text-decoration:none; margin:0 10px; font-weight:600; white-space:nowrap;">Login</a>
+    <a href="login.html" style="color:white; text-decoration:none; margin:0 10px; font-weight:600; white-space:nowrap;">Register</a>
+    <a href="product.html" style="color:white; text-decoration:none; margin:0 10px; font-weight:600; white-space:nowrap;">Products</a>
+    <a href="contact.html" style="color:white; text-decoration:none; margin:0 10px; font-weight:600; white-space:nowrap;">Contact</a>
+    <a href="cart.html" style="color:white; text-decoration:none; margin:0 10px; font-weight:600; white-space:nowrap;">Cart</a>
+  </div>
+</div>
+
+  <!-- Container to center form -->
+  <div class="container">
+    <!-- Login Form -->
+    <div class="form-box" id="login-box">
+      <h2>Sign-In</h2>
+      <form action="index.html" method="GET">
+        <input type="text" placeholder="Email or mobile phone number" required />
+        <input type="password" placeholder="Password" required />
+        <button type="submit">Continue</button>
+      </form>
+      <p>New to our site? <a onclick="showRegister()">Create your account</a></p>
+    </div>
+
+    <!-- Register Form -->
+    <div class="form-box" id="register-box" style="display:none;">
+      <h2>Create Account</h2>
+      <form>
+        <input type="text" placeholder="Your name" required />
+        <input type="email" placeholder="Email" required />
+        <input type="password" placeholder="Password" required />
+        <input type="password" placeholder="Re-enter password" required />
+        <button type="submit">Create your account</button>
+      </form>
+      <p>Already have an account? <a onclick="showLogin()">Sign-In</a></p>
+    </div>
+  </div>
+
+  <script>
+    function showRegister() {
+      document.getElementById("login-box").style.display = "none";
+      document.getElementById("register-box").style.display = "block";
+    }
+
+    function showLogin() {
+      document.getElementById("register-box").style.display = "none";
+      document.getElementById("login-box").style.display = "block";
+    }
+  </script>
+
+</body>
+</html> 

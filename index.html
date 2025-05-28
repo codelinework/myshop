@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>ShopEasy - Home</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+
+    div > a {
+      color: white;
+      text-decoration: none;
+      margin: 0 10px;
+      position: relative;
+      transition: color 0.3s ease;
+    }
+
+
+    div > a:hover {
+      color: #28a745;
+    }
+
+    div > a::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      background: #28a745;
+      left: 0;
+      bottom: -4px;
+      transition: width 0.3s ease;
+    }
+
+    div > a:hover::after {
+      width: 100%;
+    }
+  </style>
+</head>
+
+<body style="margin:0; font-family: 'Segoe UI', sans-serif; background-color:#f8f9fa;">
+
+  <!-- Navbar -->
+<div style="background-color:#333; padding:15px 20px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap;">
+  <div style="color:white; font-size:24px; font-weight:bold;">🛒 ShopEasy</div>
+
+  <div style="display:flex; align-items:center; gap:15px; flex-wrap:wrap;">
+
+    <!-- Search form -->
+    <form action="product.html" method="GET" style="display:flex; align-items:center;">
+      <input 
+        type="text" 
+        name="q" 
+        placeholder="Search products..." 
+        style="padding:6px 10px; border:none; border-radius:5px 0 0 5px; outline:none;"
+        required
+      >
+      <button 
+        type="submit" 
+        style="padding:6px 15px; border:none; background:#28a745; color:white; border-radius:0 5px 5px 0; cursor:pointer;"
+      >
+        Search
+      </button>
+    </form>
+
+    <a href="index.html" style="color:white; text-decoration:none; margin:0 10px;">Home</a>
+    <a href="login.html" style="color:white; text-decoration:none; margin:0 10px;">Login</a>
+    <a href="login.html" style="color:white; text-decoration:none; margin:0 10px;">Register</a>
+    <a href="product.html" style="color:white; text-decoration:none; margin:0 10px;">Products</a>
+    <a href="Contact.html" style="color:white; text-decoration:none; margin:0 10px;">Contact</a>
+    <a href="Cart.html" style="color:white; text-decoration:none; margin:0 10px;">cart</a>
+  </div>
+</div>
+
+  <!-- Hero Section -->
+  <div style="text-align:center; padding:60px 20px; background-color:#e9ecef;">
+    <h1 style="font-size:36px; color:#222;">Welcome to ShopEasy</h1>
+    <p style="font-size:18px; color:#555;">Your one-stop online shopping destination</p>
+    <a href="product.html" style="padding:12px 25px; background-color:#007bff; color:white; border-radius:8px; text-decoration:none; display:inline-block; margin-top:20px;">Get Started</a>
+  </div>
+
+  <!-- Featured Products -->
+  <div style="padding:40px 20px;">
+    <h2 style="text-align:center; color:#333;">Featured Products</h2>
+    <div style="display:flex; justify-content:center; gap:20px; flex-wrap:wrap; margin-top:30px;">
+
+<!-- Product 1 watch -->
+<div style="width:220px; background:white; padding:15px; border-radius:10px; box-shadow:0 2px 8px rgba(0,0,0,0.1); text-align:center;">
+  <img src="images/Watch.jpg" alt="Watch" style="width:200px; height:200px; object-fit:cover; border-radius:8px;">
+  <h4 style="margin:10px 0 5px;">⌚Watch</h4>
+  <p style="color:#dc3545;">₹ 79,999.00</p>
+  <a href="product.html" style="padding:12px 25px; background-color:#000000; color:white; border-radius:8px; text-decoration:none; display:inline-block; margin-top:20px;">Buy a Product</a>
+</div>
+
+<!-- Product 2 -->
+<div style="width:220px; background:white; padding:15px; border-radius:10px; box-shadow:0 2px 8px rgba(0,0,0,0.1); text-align:center;">
+  <img src="images/Wireless Headphones.jpg" alt="Wireless Headphones" style="width:200px; height:200px; object-fit:cover; border-radius:8px;">
+  <h4 style="margin:10px 0 5px;">🎧Wireless Headphones</h4>
+  <p style="color:#dc3545;">₹ 99,999.00</p>
+  <a href="product.html" style="padding:12px 25px; background-color:#000000; color:white; border-radius:8px; text-decoration:none; display:inline-block; margin-top:20px;">Buy a Product</a>
+</div>
+
+<!-- Product 3 -->
+<div style="width:220px; background:white; padding:15px; border-radius:10px; box-shadow:0 2px 8px rgba(0,0,0,0.1); text-align:center;">
+  <img src="images/Bluetooth Speaker.jpg" alt="Bluetooth Speaker" style="width:200px; height:200px; object-fit:cover; border-radius:8px;">
+  <h4 style="margin:10px 0 5px;">🔊Bluetooth Speaker</h4>
+  <p style="color:#dc3545;">₹ 35,550.00</p>
+  <a href="product.html" style="padding:12px 25px; background-color:#000000; color:white; border-radius:8px; text-decoration:none; display:inline-block; margin-top:20px;">Buy a Product</a>
+</div>
+
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div style="text-align:center; background-color:#333; color:white; padding:20px;">
+    &copy; 2025 ShopEasy. All Rights Reserved.
+  </div>
+
+</body>
+</html>

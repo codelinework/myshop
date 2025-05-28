@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>ShopEasy - Home</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+
+    /* Navbar links */
+    div > a {
+      color: white;
+      text-decoration: none;
+      margin: 0 10px;
+      position: relative;
+      transition: color 0.3s ease;
+    }
+
+    div > a:hover {
+      color: #28a745;
+    }
+
+    div > a::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      background: #28a745;
+      left: 0;
+      bottom: -4px;
+      transition: width 0.3s ease;
+    }
+
+    div > a:hover::after {
+      width: 100%;
+    }
+
+    /* Contact form styles */
+    h2 {
+      text-align: center;
+      color: #333;
+      margin-top: 40px;
+      margin-bottom: 20px;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    form.contact-form {
+      max-width: 450px;
+      background-color: white;
+      padding: 25px 30px;
+      margin: 0 auto 40px auto;
+      border-radius: 8px;
+      box-shadow: 0 0 12px rgba(0,0,0,0.1);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    form.contact-form label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 600;
+      color: #333;
+      font-size: 14px;
+    }
+
+    form.contact-form input[type="text"],
+    form.contact-form input[type="email"],
+    form.contact-form textarea {
+      width: 100%;
+      padding: 10px 12px;
+      margin-bottom: 18px;
+      border: 1.8px solid #ccc;
+      border-radius: 6px;
+      font-size: 15px;
+      font-family: inherit;
+      resize: vertical;
+      box-sizing: border-box;
+      transition: border-color 0.3s ease;
+    }
+
+    form.contact-form input[type="text"]:focus,
+    form.contact-form input[type="email"]:focus,
+    form.contact-form textarea:focus {
+      border-color: #28a745;
+      outline: none;
+      box-shadow: 0 0 6px rgba(40, 167, 69, 0.5);
+    }
+
+    form.contact-form button {
+      width: 100%;
+      background-color: #28a745;
+      color: white;
+      padding: 12px;
+      border: none;
+      border-radius: 6px;
+      font-size: 17px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: background-color 0.3s ease;
+    }
+
+    form.contact-form button:hover {
+      background-color: #218838;
+    }
+
+  </style>
+</head>
+
+<body style="margin:0; font-family: 'Segoe UI', sans-serif; background-color:#f8f9fa;">
+
+  <!-- Navbar -->
+  <div style="background-color:#333; padding:15px 20px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap;">
+    <div style="color:white; font-size:24px; font-weight:bold;">🛒 ShopEasy</div>
+    <div style="display:flex; align-items:center; gap:15px; flex-wrap:wrap;">
+      <form action="product.html" method="GET" style="display:flex; align-items:center;">
+        <input 
+          type="text" 
+          name="q" 
+          placeholder="Search products..." 
+          style="padding:6px 10px; border:none; border-radius:5px 0 0 5px; outline:none;"
+          required
+        >
+        <button 
+          type="submit" 
+          style="padding:6px 15px; border:none; background:#28a745; color:white; border-radius:0 5px 5px 0; cursor:pointer;"
+        >
+          Search
+        </button>
+      </form>
+      <a href="index.html" style="color:white; text-decoration:none; margin:0 10px;">Home</a>
+      <a href="login.html" style="color:white; text-decoration:none; margin:0 10px;">Login</a>
+      <a href="login.html" style="color:white; text-decoration:none; margin:0 10px;">Register</a>
+      <a href="product.html" style="color:white; text-decoration:none; margin:0 10px;">Products</a>
+      <a href="contact.html" style="color:white; text-decoration:none; margin:0 10px;">Contact</a>
+      <a href="cart.html" style="color:white; text-decoration:none; margin:0 10px;">Cart</a>
+    </div>
+  </div>
+
+  <!-- Contact Us Form -->
+  <h2>Contact Us</h2>
+
+  <form class="contact-form" id="contactForm" method="POST">
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name" placeholder="Your name" required />
+
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" placeholder="Your email" required />
+
+    <label for="message">Message:</label>
+    <textarea id="message" name="message" placeholder="Write your message here..." rows="5" required></textarea>
+
+    <button type="submit">Send Message</button>
+  </form>
+
+  <script>
+    // Prevent default form submission and simulate sending message then redirect
+    document.getElementById('contactForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      alert('Message sent successfully!');
+      // Redirect to home page after submission
+      window.location.href = 'index.html';
+    });
+  </script>
+
+</body>
+</html>
